@@ -12,13 +12,9 @@ import fr.istic.master2.ccn.model.Employee;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.Produces;
 
 @Path("/hello")
 public class App {
@@ -52,6 +48,13 @@ public class App {
     public void addEmployee() {
         jpaTest.createEmployees();
 
+    }
+    @POST
+    @Path("/add")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addUser(Employee E){
+        jpaTest.addEmployee(E);
+        return "hello";
     }
 
     @GET

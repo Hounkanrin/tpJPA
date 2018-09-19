@@ -14,10 +14,11 @@ public class JpaTest {
    /* public JpaTest(EntityManager manager) {
         this.manager = manager;
     }*/
+
     /**
      * @param
      */
-    public JpaTest () {
+    public JpaTest() {
 
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mysql");
         manager = factory.createEntityManager();
@@ -25,7 +26,7 @@ public class JpaTest {
 
     public List<Employee> employeeList() {
 
-        Query list= manager.createQuery("select a from Employee a");
+        Query list = manager.createQuery("select a from Employee a");
         return list.getResultList();
 
         /*EntityTransaction tx = manager.getTransaction();
@@ -53,8 +54,8 @@ public class JpaTest {
             manager.persist(department);
             manager.persist(depart);
 
-            manager.persist(new Employee("Jakab Gipsz",department));
-            manager.persist(new Employee("Captain Nemo",department));
+            manager.persist(new Employee("Jakab Gipsz", department));
+            manager.persist(new Employee("Captain Nemo", department));
             manager.persist(new Employee("Viviane H", depart));
             tx.commit();
 
@@ -68,14 +69,34 @@ public class JpaTest {
             System.out.println("next employee: " + next);
         }
     }*/
-   public List<Department> listDepartment() {
-        Query department= manager.createQuery("select d From Department d");
-                return department.getResultList();
 
-        }
-
+    /**
+     * @return
+     */
+    public List<Department> listDepartment() {
+        Query department = manager.createQuery("select d From Department d");
+        return department.getResultList();
 
     }
+
+    public void addEmployee (Employee E) {
+        EntityTransaction tx = manager.getTransaction();
+        tx.begin();
+      try {
+          manager.persist(E);
+          tx.commit();
+      }
+      catch (Exception e) {
+
+         tx.rollback();
+         e.printStackTrace();
+      }
+
+    }
+}
+
+
+
 
 
 

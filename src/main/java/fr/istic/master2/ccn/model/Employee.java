@@ -25,9 +25,11 @@ public class Employee {
         this.department = department;
     }
 
-    public Employee(String name) {
+    public Employee(String name)
+    {
         this.name = name;
     }
+
 
     @Id
     @GeneratedValue
