@@ -2,6 +2,7 @@ package fr.istic.master2.ccn.dao;
 
 import fr.istic.master2.ccn.model.Department;
 import fr.istic.master2.ccn.model.Employee;
+import org.codehaus.jackson.map.util.JSONPObject;
 
 import javax.persistence.*;
 
@@ -79,21 +80,64 @@ public class JpaTest {
 
     }
 
-    public void addEmployee (Employee E) {
+    public void addEmployee(Employee E) {
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
-      try {
-          manager.persist(E);
-          tx.commit();
-      }
-      catch (Exception e) {
+        try {
+            manager.persist(E);
+            tx.commit();
+        } catch (Exception e) {
 
-         tx.rollback();
-         e.printStackTrace();
-      }
+            tx.rollback();
+            e.printStackTrace();
+        }
 
     }
-}
+
+    public Employee employee(Long id) {
+        //Query query = manager.createQuery("select a from Employee a where a.id =:id");
+        Employee emp = manager.find(Employee.class, id);
+        return emp;
+
+    }
+
+    public String deleteEmployee(Long id) {
+        Employee em = manager.find(Employee.class, id);
+        manager.getTransaction().begin();
+        manager.remove(em);
+        manager.getTransaction().commit();
+        return "employee deleted" + em.getName();
+    }
+
+
+    public String updateEmployee(Long id, String name) {
+        System.out.println(id);
+        Employee em = manager.find(Employee.class, id);
+        manager.getTransaction().begin();
+        System.out.println(name);
+        em.setName(name);
+       System.out.println(name);
+        manager.merge(em);
+        manager.getTransaction().commit();
+        return "modified";
+    }
+    public String updateE(Employee employee) {
+        EntityTransaction tx = manager.getTransaction();
+        tx.begin();
+        try {
+            manager.merge(employee);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        }
+
+        return "Employee updated";
+    }
+
+    }
+
+
 
 
 

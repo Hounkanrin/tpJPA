@@ -64,4 +64,36 @@ public class App {
        return jpaTest.listDepartment();
 
     }
+
+    @GET
+    @Path("/employer/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Employee employee(@PathParam(value="id") Long id){
+        return jpaTest.employee(id);
+
+    }
+
+    @GET
+    @Path("/delete/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String delete(@PathParam(value="id") Long id)
+    {
+        return jpaTest.deleteEmployee(id);
+    }
+
+    @PUT
+    @Path("/update/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String updateEmployee(@PathParam(value="id") Long id, @QueryParam(value="name") String name){
+       return jpaTest.updateEmployee(id, name);
+    }
+
+    @PUT
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String updateEm(Employee employee){
+        return jpaTest.updateE(employee);
+    }
+
+
 }
