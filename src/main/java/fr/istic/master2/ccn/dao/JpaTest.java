@@ -30,19 +30,6 @@ public class JpaTest {
         Query list = manager.createQuery("select a from Employee a");
         return list.getResultList();
 
-        /*EntityTransaction tx = manager.getTransaction();
-        tx.begin();
-        try {
-            test.createEmployees();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        tx.commit();
-        test.listEmployees();
-        manager.close();
-        factory.close();
-        System.out.println(".. done");*/
-
     }
 
     public void createEmployees() {
@@ -111,12 +98,9 @@ public class JpaTest {
 
 
     public String updateEmployee(Long id, String name) {
-        System.out.println(id);
         Employee em = manager.find(Employee.class, id);
         manager.getTransaction().begin();
-        System.out.println(name);
         em.setName(name);
-       System.out.println(name);
         manager.merge(em);
         manager.getTransaction().commit();
         return "modified";

@@ -84,14 +84,17 @@ public class App {
     @PUT
     @Path("/update/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String updateEmployee(@PathParam(value="id") Long id, @QueryParam(value="name") String name){
-       return jpaTest.updateEmployee(id, name);
+    public String updateEmployee(@PathParam(value="id") Long id, PersonDTO persob){
+        System.err.println(persob.getName());
+
+       return jpaTest.updateEmployee(id, persob.getName());
     }
 
     @PUT
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     public String updateEm(Employee employee){
+
         return jpaTest.updateE(employee);
     }
 
